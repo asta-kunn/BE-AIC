@@ -6,10 +6,11 @@ const cors = require('cors');
 config();
 const app = express();
 const port = process.env.PORT || 8080;
+const url = "mongodb+srv://bradleygaming12:rifqiadli@be-aic.axfryr4.mongodb.net/?retryWrites=true&w=majority";
 app.use(bodyParser.json());
 app.use(cors());
 mongoose
-    .connect(process.env.DB_URL)
+    .connect(url)
     .then(() => {
     console.log("Connected to the database!");
 })

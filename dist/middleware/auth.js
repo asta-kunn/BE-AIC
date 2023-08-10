@@ -15,8 +15,9 @@ function verifyToken(req, res, next) {
         return res.status(401).send("Invalid Token");
     }
     token = token.substring(7, token.length);
+    const token_key = "MySecretKey2023!";
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, process.env.TOKEN_KEY ? process.env.TOKEN_KEY : "");
+        const decoded = jsonwebtoken_1.default.verify(token, token_key ? token_key : "");
         req.username = decoded.username;
         req.email = decoded.email;
     }

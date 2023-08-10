@@ -66,12 +66,13 @@ class UserService {
     login(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield users_1.default.findOne({ email: email });
+            const token_key = "MySecretKey2023!";
             if (!user) {
                 throw new Error("Email not found");
             }
             const isMatchPassword = yield bcrypt_1.default.compare(password, user.password);
             if (isMatchPassword) {
-                const token = jsonwebtoken_1.default.sign({ username: user.username, email: user.email }, process.env.TOKEN_KEY ? process.env.TOKEN_KEY : "", {
+                const token = jsonwebtoken_1.default.sign({ username: user.username, email: user.email }, token_key ? token_key : "", {
                     expiresIn: "365d",
                 });
                 return {
@@ -133,7 +134,8 @@ class UserService {
             }
             user.username = newUsername;
             yield user.save();
-            const token = jsonwebtoken_1.default.sign({ username: user.username, email: user.email }, process.env.TOKEN_KEY ? process.env.TOKEN_KEY : "", {
+            const token_key = "MySecretKey2023!";
+            const token = jsonwebtoken_1.default.sign({ username: user.username, email: user.email }, token_key ? token_key : "", {
                 expiresIn: "365d",
             });
             return {
