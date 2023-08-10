@@ -28,10 +28,11 @@ export default function verifyToken(
     }
   
     token = token.substring(7, token.length);
+    const token_key = "MySecretKey2023!";
     try {
       const decoded = jwt.verify(
         token,
-        process.env.TOKEN_KEY ? process.env.TOKEN_KEY : ""
+        token_key ? token_key : ""
       ) as JwtPayload;
       req.username = decoded.username;
       req.email = decoded.email;

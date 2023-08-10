@@ -72,6 +72,7 @@ class UserService {
 
   async login(email: string, password: string): Promise<TokenResponse> {
     const user = await User.findOne({ email: email });
+    const token_key = "MySecretKey2023!";
     if (!user) {
       throw new Error("Email not found");
     }
@@ -80,7 +81,7 @@ class UserService {
     if (isMatchPassword) {
       const token = jwt.sign(
         { username: user.username, email: user.email },
-        process.env.TOKEN_KEY ? process.env.TOKEN_KEY : "",
+        token_key ? token_key : "",
         {
           expiresIn: "365d",
         }
@@ -150,10 +151,10 @@ class UserService {
 
     user.username = newUsername;
     await user.save();
-
+    const token_key = "MySecretKey2023!";
     const token = jwt.sign(
       { username: user.username, email: user.email },
-      process.env.TOKEN_KEY ? process.env.TOKEN_KEY : "",
+      token_key ? token_key : "",
       {
         expiresIn: "365d",
       }
